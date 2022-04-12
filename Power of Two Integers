@@ -1,0 +1,24 @@
+Given a positive integer which fits in a 32 bit signed integer, find if it can be expressed as A^P where P > 1 and A > 0. A and P both should be integers.
+
+Example
+
+Input : 4
+Output : True  
+as 2^2 = 4.  .
+
+solution :
+int Solution::isPower(int A) {
+    //A=x^y;
+    //log A = y log x;
+    if(A==1)
+        return 1;
+
+    for(int x=2;x*x<=A;x++)
+    {
+        double y = log(A)/log(x);
+        if(abs((int)y -y)<0.000001 ) //because 32 bit signed int mentioned
+            return 1;
+    }
+    return 0;
+
+}
