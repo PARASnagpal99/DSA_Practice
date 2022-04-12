@@ -1,2 +1,2 @@
 # CP-algorithms-
-I will daily upload 1 algorithm or question . 
+I will daily upload algorithms solution to problems  . 
