@@ -18,5 +18,30 @@ Input 2:
  On the second step we step from 1 to 3. 
 
 Solution : 
+class Solution {
+public:
+    int reachNumber(int target) {
+        if(target==0){
+            return 0 ;
+        }
+        
+        int ans = 0 , i = 1 ;
+        target = abs(target);
+        while(true){
+            ans+=i;
+            if(ans==target) return i ;
+            
+            if(ans>target){
+                if((ans-target)%2==0)
+                    return i ;
+                if(i%2)
+                    return (i+2);
+                return (i+1);
+            }
+            i++;
+        }
+        return i ;
+    }
+};
 
   
