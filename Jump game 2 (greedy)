@@ -24,3 +24,30 @@ Constraints:
 
 
 Solution : 
+class Solution {
+public:
+    int jump(vector<int>& nums) {
+         int n = nums.size() ;
+         if(n==1){
+             return 0 ;
+         }
+         int start = 1 , id = 0 ;
+         int res = 1 ;
+         while(true){
+             if(nums[id]+id>=(n-1)) return res ;
+             
+             int dist = 0 , indx = 0 ;
+             while(start<=(nums[id]+id)){
+                 if(start+nums[start] > dist){
+                     dist = start + nums[start];
+                     indx = start ;
+                 }
+                 start++;
+             }
+             start = nums[id] + id + 1 ;
+             id = indx ;
+             res++;
+         }
+        return res ;
+    }
+};
