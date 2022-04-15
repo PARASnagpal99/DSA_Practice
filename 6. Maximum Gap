@@ -15,3 +15,34 @@ Output: 0
 Explanation: The array contains less than 2 elements, therefore return 0. 
 
 solution : 
+class Solution {
+public:
+    int maximumGap(vector<int>& nums) {
+        int n = nums.size() ;
+        if(n==1) return 0 ;
+        int mina = INT_MAX , maxa = INT_MIN ;
+        for(int i=0 ; i<n ; ++i){
+            mina = min(mina,nums[i]);
+            maxa = max(maxa,nums[i]);
+        }
+        
+        double gap = (((maxa-mina)*1.0)/(n-1)) ;
+        if(gap<1.0) gap = 1.0 ;
+        
+        vector<pair<int,int>>arr(n,{INT_MAX,INT_MIN});
+        for(int i=0 ; i<n ; ++i){
+            int pos = (nums[i]-mina)/gap ;
+            arr[pos].first = min(arr[pos].first,nums[i]);
+            arr[pos].second = max(arr[pos].second,nums[i]);
+        }
+        
+        int prevMax = arr[0].second , ans = 0 ;
+        for(int i=1 ; i<n ; ++i){
+            if(arr[i].first==INT_MAX) continue ;
+            ans = max(ans,arr[i].first-prevMax);
+            prevMax = arr[i].second ;
+        }
+        
+        return ans ;
+    }
+};
