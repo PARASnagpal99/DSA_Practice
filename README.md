@@ -1,2 +1,2 @@
-# 50 day bro coder challenge-
+# Practice 
 I will daily upload  solution to problems  . 
