@@ -10,35 +10,28 @@
  * };
  */
 class BSTIterator {
-private :
-#define pb push_back
-vector<int>arr ;
-int i = 0 ;
+    stack<TreeNode*>myStack ;
 public:
-
-    void dfs(TreeNode* root){
-        if(!root) return ;
-        if(root!=NULL){
-            dfs(root->left);
-            arr.pb(root->val);
-            dfs(root->right);
-        }
-    }
     BSTIterator(TreeNode* root) {
-        dfs(root);
+        pushAll(root);
     }
     
     int next() {
-        int ans = arr[i] ;
-        i++;
-        return ans ;
+        TreeNode* tmpNode = myStack.top() ;
+        myStack.pop() ;
+        pushAll(tmpNode->right) ;
+        return tmpNode->val ;
     }
     
     bool hasNext() {
-        int n = arr.size();
-        if(i<n) return true ;
-        else 
-            return false ;
+        return !myStack.empty() ;
+    }
+private :
+    void pushAll(TreeNode *node){
+        while(node!=NULL){
+            myStack.push(node);
+            node = node->left ;
+        }
     }
 };
 
