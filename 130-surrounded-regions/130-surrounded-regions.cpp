@@ -3,7 +3,7 @@ public:
     void dfs(vector<vector<char>>& grid , int i , int j){
         int m = grid.size() , n = grid[0].size() ;
         if(i<0 or j<0 or i>=m or j>=n) return ;
-        if(grid[i][j]!='O') return ;
+        if(grid[i][j]=='X' or grid[i][j]=='@') return ;
         grid[i][j] = '@' ;
         dfs(grid,i,j+1);
         dfs(grid,i,j-1);
