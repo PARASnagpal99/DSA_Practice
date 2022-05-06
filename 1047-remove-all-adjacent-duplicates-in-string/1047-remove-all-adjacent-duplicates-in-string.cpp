@@ -1,24 +1,16 @@
 class Solution {
 public:
+    #define pb push_back
     string removeDuplicates(string s) {
-       int n = s.length() ;
-       string st ;
-       int i = 0 ;
-       while(i<n){
-           if(st.back()!=s[i] or st.empty()){
-               st.push_back(s[i]);
-           }else{
-               st.pop_back();
-           }
-           i++;
-       }
-       string res = "" ;
-       while(!st.empty()){
-           char x = st.back();
-           res.push_back(x);
-           st.pop_back();
-       }
-        reverse(res.begin(),res.end());
+        string res = "" ;
+        for(auto &it : s){
+            if(res.back()!=it or res.empty()){
+                res.pb(it);
+            }else{
+                res.pop_back();
+            }
+        }
+        
         return res ;
     }
 };
