@@ -16,9 +16,9 @@ public:
             }
         }
         
-        string res = "" ;
-        for(auto &it : stk) res.append(it.second,it.first);
-        return res ;
+        s.clear() ;
+        for(auto &it : stk) s.append(it.second,it.first);
+        return s ;
         
     }
 };
