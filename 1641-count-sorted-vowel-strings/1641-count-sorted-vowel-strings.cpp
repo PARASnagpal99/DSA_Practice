@@ -1,19 +1,23 @@
 class Solution {
 public:
-    void solve(int n , vector<char> &arr ,int indx , int &count , int last ){
-         if(indx>=n){
-             count++;
-             return ;
-         }
-        for(int i=last ; i<arr.size() ; ++i){
-            solve(n,arr,indx+1,count,i);   
+    void func(vector<vector<char>>&res , vector<char>&temp , int indx , vector<char> &arr , int n){
+        if(temp.size()==n){
+            res.push_back(temp);
+            return ;
+        }
+        
+        for(int i=indx ; i<arr.size() ; ++i){
+            temp.push_back(arr[i]);
+            func(res,temp,i,arr,n);
+            temp.pop_back();
         }
     }
     
     int countVowelStrings(int n) {
           vector<char> arr = {'a','e','i','o','u'};
-          int count = 0 ;
-          solve(n,arr,0,count,0);
-          return count ;
+          vector<vector<char>>res ;
+          vector<char>temp ;
+          func(res,temp,0,arr,n);
+          return res.size() ;
     }
 };
