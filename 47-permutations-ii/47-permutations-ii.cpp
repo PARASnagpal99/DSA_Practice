@@ -1,6 +1,6 @@
 class Solution {
 public:
-    void func( vector<vector<int>>&ans , vector<int>&temp , unordered_map<int,int> &s , int n ){
+    void func( vector<vector<int>>&ans , vector<int>&temp , map<int,int> &s , int n ){
           if(temp.size()==n){
               ans.push_back(temp);
               return ;
@@ -22,7 +22,7 @@ public:
         int n = nums.size();
         vector<vector<int>>ans ;
         vector<int>temp ;
-        unordered_map<int,int>s ;
+        map<int,int>s ;
         for(auto &it : nums){
             s[it]++;
         }
