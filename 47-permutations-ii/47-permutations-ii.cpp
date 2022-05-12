@@ -1,33 +1,30 @@
 class Solution {
 public:
-    void func( vector<vector<int>>&ans , vector<int>&temp , map<int,int> &s , int n ){
+    void func( set<vector<int>>&ans , vector<int>&temp , vector<int>&nums , int n ){
           if(temp.size()==n){
-              ans.push_back(temp);
+              ans.insert(temp);
               return ;
           } 
-        for(auto &it : s){
-            if(it.second<=0){
+        for(int i=0 ; i<nums.size() ; ++i){
+            int x = nums[i];
+            if(x>10){
                 continue ;
             }
-            it.second--;
-            temp.push_back(it.first);
-            func(ans,temp,s,n);
-            it.second++;
+            nums[i] = 100 ;
+            temp.push_back(x);
+            func(ans,temp,nums,n);
+            nums[i] = x ;
             temp.pop_back();
         }
     }
     
-    
     vector<vector<int>> permuteUnique(vector<int>& nums) {
         int n = nums.size();
-        vector<vector<int>>ans ;
+        set<vector<int>>ans ;
         vector<int>temp ;
-        map<int,int>s ;
-        for(auto &it : nums){
-            s[it]++;
-        }
-        func(ans,temp,s,n);
-        return ans ;
+        func(ans,temp,nums,n);
+        vector<vector<int>>res = vector<vector<int>>(ans.begin(),ans.end());
+        return res ;
     }
 };
 
