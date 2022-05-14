@@ -13,8 +13,8 @@ public:
             int v = node.second ;
             int v_dist = node.first ;
             st.erase(st.begin());
-            if(vis[v]) continue ;
-            vis[v] = 1 ;
+            // if(vis[v]) continue ;
+            // vis[v] = 1 ;
             for(auto child : g[v]){
                 int child_v = child.first ;
                 int wt = child.second ;
