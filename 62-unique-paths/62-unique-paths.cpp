@@ -1,19 +1,16 @@
 class Solution {
 public:
-    int dp[105][105] ;
-    int func(int m , int n){
-        if(dp[m][n]!=-1) return dp[m][n] ;
-        if(m<0 or n<0){
+    int func(int i , int j, vector<vector<int>>& dp){
+        if(i<0 or j<0){
             return 0 ;
-        }else if(m==0 or n==0){
-            return 1 ;
-        }else{
-            return dp[m][n] = func(m-1,n) + func(m,n-1);
         }
+        else if(i==0 && j==0) return 1 ;
+        else if(dp[i][j]) return dp[i][j] ;
+        else return dp[i][j]= (func(i-1,j,dp)+ func(i,j-1,dp)) ;
     }
     
     int uniquePaths(int m, int n) {
-            memset(dp,-1,sizeof(dp));
-            return func(m-1,n-1);    
+            vector<vector<int>>dp(m,vector<int>(n,0));
+            return func(m-1,n-1,dp);
     }
 };
