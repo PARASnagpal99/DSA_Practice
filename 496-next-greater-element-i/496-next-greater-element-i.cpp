@@ -1,22 +1,29 @@
 class Solution {
 public:
     vector<int> nextGreaterElement(vector<int>& nums1, vector<int>& nums2) {
-        vector<int> res(nums1.size(),-1) ;
-        for(int i=0 ; i<nums1.size() ; ++i){
-            int x = nums1[i] ;
-            bool flag = false ;
-            for(int k=0 ; k<nums2.size() ; ++k){
-                if(nums2[k]==x){
-                    flag = true ;
-                }
-                
-                if(nums2[k]>x && flag){
-                    res[i] = nums2[k];
-                    break ;
-                }
+        int n = nums1.size() ;
+        stack<int> stk ;
+        map<int,int>mp ;
+        vector<int> nge(n,-1);
+        
+        for(auto &it : nums2){
+            
+            while(!stk.empty() && stk.top()<it){
+                mp[stk.top()] = it ;
+                stk.pop() ;
             }
             
+            stk.push(it) ;
         }
-        return res ;
+        
+        
+        for(int i=0 ; i<n ; ++i){
+            if(mp.find(nums1[i])!=mp.end()){
+                nge[i] = mp[nums1[i]];
+            }
+        }
+        
+        return nge ;
+        
     }
 };
