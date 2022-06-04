@@ -1,38 +1,38 @@
 class Solution {
 public:
-    bool isSafe(vector<string>&temp , int i , int j){
-        int n = temp.size() ;
-        for(int x=0 ; x<i ; ++x){
-            for(int y=0 ; y<n ; ++y){
+    bool isSafe(int i , int j , vector<string>& temp){
+        
+        for(int x = 0 ; x<i ; ++x){
+            for(int y=0 ; y<(int)temp.size() ; ++y){
                 if(temp[x][y]=='Q'){
-                     if(y==j or (abs(x-i)==abs(y-j))){
-                    return false ;
-                   }
+                    if(j==y or abs(x-i)==abs(y-j)) return false ;
                 }
             }
         }
         return true ;
     }
     
-    void func(int i , int n , vector<string>&temp , vector<vector<string>>&ans){
-         if(i==n){
-             ans.push_back(temp);
-             return ;
-         }
+    
+    void dfs(int i , vector<string> &temp , vector<vector<string>>&res){
+        int n = temp.size() ;
+        if(i==n){
+            res.push_back(temp) ;
+        }
+        
         for(int j=0 ; j<n ; ++j){
-            if(isSafe(temp,i,j)){
+            if(isSafe(i,j,temp)){
                 temp[i][j] = 'Q' ;
-                func(i+1,n,temp,ans);
-                temp[i][j] = '.' ; // backtrack 
+                dfs(i+1,temp,res);
+                temp[i][j] = '.' ;
             }
         }
-        return ;
+        
     }
     
     vector<vector<string>> solveNQueens(int n) {
-        vector<vector<string>>ans ;
-        vector<string>temp(n,string(n,'.'));
-        func(0,n,temp,ans);
-        return ans ;
+        vector<vector<string>>res ;
+        vector<string> temp(n,string(n,'.')) ;
+        dfs(0,temp,res);
+        return res ;
     }
 };
