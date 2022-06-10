@@ -12,10 +12,13 @@ public:
                 st.insert(s[end]);
                 ans = max(ans,end-start+1);
                 end++;
-            }else{
-                st.erase(s[start]);
-                start++;
             }
+            
+                while(st.find(s[end])!=st.end()){
+                    st.erase(s[start]);
+                    start++;
+                }
+                
         }
         
         return ans ;
