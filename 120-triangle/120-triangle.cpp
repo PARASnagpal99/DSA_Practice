@@ -1,6 +1,6 @@
 class Solution {
 public:
-    int dp[205][205] ;
+     int dp[205][205] ;
     int func(int i , int j , vector<vector<int>>&grid){
         int n = grid.size();
         if(i==n-1) return grid[i][j] ;
