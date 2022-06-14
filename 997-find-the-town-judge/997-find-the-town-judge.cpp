@@ -1,19 +1,24 @@
 class Solution {
 public:
     int findJudge(int n, vector<vector<int>>& trust) {
-        if(n==1 && trust.empty()) return true ;
-        vector<int> nums(n+1,0) ;
+        
+        if(trust.empty() && n==1) return 1 ;
+        
+        map<int,int> mp1 ;
+        unordered_set<int> st ;
+        
         for(auto &it : trust){
-            nums[it[0]]--;
-            nums[it[1]]++;
+            mp1[it[1]]++;
+            st.insert(it[0]);
         }
-        int ans = -1 ;
-        for(int i=1 ; i<=n ; ++i){
-            if(nums[i]==n-1){
-                ans = i ;
+        int indx = -1 ;
+        for(auto &it : mp1){
+            if(st.find(it.first)==st.end()){
+                if(it.second == (n-1)) indx = it.first ;
             }
         }
-         
-        return ans ;
+        
+        return indx ;
+        
     }
 };
