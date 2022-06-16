@@ -1,17 +1,18 @@
 class Solution {
 public:
     int lengthOfLIS(vector<int>& nums) {
-        vector<int> temp ;
-        int len = 1 ;
-        temp.push_back(nums[0]) ;
-        for(int i=1 ; i<nums.size() ; ++i){
-            if(nums[i]>temp.back()){
-                temp.push_back(nums[i]);
-                len++;
-            }else{
-                int ind = lower_bound(temp.begin(),temp.end(),nums[i]) - temp.begin() ;
-                temp[ind] = nums[i] ;
+        int n = nums.size() ;
+        vector<int> dp(n,1) ;
+        int len = 0 ;
+        
+        for(int i=0 ; i<n ; ++i){
+            for(int prev=0 ; prev < i ; prev++){
+                
+                if(nums[prev] < nums[i]){
+                    dp[i] = max(dp[i] , 1 + dp[prev]) ; // dp[i] signifies the length of longest increasing subsequence that ends at index i 
+                }
             }
+            len = max(len , dp[i]) ;
         }
         
         return len ;
