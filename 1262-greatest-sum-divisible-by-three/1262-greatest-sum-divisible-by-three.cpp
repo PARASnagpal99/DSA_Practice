@@ -1,43 +1,26 @@
 class Solution {
 public:
+    
+    int func(int i , vector<int> &nums , int state , vector<vector<int>> &dp){
+          if(i == nums.size()){
+              if(state == 0){
+                  return 0 ;
+              }
+              return -10000 ;
+          }    
+        if(dp[i][state]!=-1) return dp[i][state] ;
+        int take = nums[i] + func(i+1 , nums , (state+nums[i])%3 , dp) ;
+        int notTake = func(i+1,nums,state, dp );
+        return dp[i][state] = max(take,notTake);
+    }
+    
+    
+    
     int maxSumDivThree(vector<int>& nums) {
         int n = nums.size() ;
-        
-        int sum = accumulate(nums.begin(),nums.end(),0);
-        
-        int firstMin1 = INT_MAX/2  , secondMin1 = INT_MAX/2 ;
-        int firstMin2 = INT_MAX/2  , secondMin2 = INT_MAX/2 ;
-        
-        
-        if(sum % 3 == 0 ) return sum ;
-        
-        vector<int> num1 , num2 ;
-        
-        
-        for(auto &it : nums){
-            if(it%3==1) num1.push_back(it);
-            if(it%3==2) num2.push_back(it);
-        }
-        
-        sort(num1.begin(),num1.end());
-        sort(num2.begin(),num2.end());
-        
-        if(num1.size() >= 1) firstMin1 = num1[0] ;
-        if(num1.size() >= 2) secondMin1 = num1[1] ;
-        
-        if(num2.size() >= 1) firstMin2 = num2[0] ;
-        if(num2.size() >= 2) secondMin2 = num2[1] ;
-        
-        
-        
-        if(sum % 3 == 1){
-            return (sum - min(firstMin1 , firstMin2 + secondMin2)) ;
-        }
-      
-        return (sum - min(firstMin2 , firstMin1 + secondMin1)) ;
-       
-        
-        
+        vector<vector<int>> dp(n+1,vector<int>(3,-1));
+        int ans = func(0,nums,0,dp);
+        return ans ;
         
     }
 };
