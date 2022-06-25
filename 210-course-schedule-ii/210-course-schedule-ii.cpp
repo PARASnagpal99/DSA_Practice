@@ -1,37 +1,83 @@
 class Solution {
-private :
 public:
-	unordered_map<int, vector<int>> adj;
-	vector<int> ans;
-	int t ;
-	vector<int> vis;
-	bool dfs(int u)
-	{
-		vis[u] = -1;  //when we are visiting node u
-		for (int v : adj[u])
-		{
-			if (vis[v] == -1) return false;
-			if (vis[v] == 0 && dfs(v) == false) return false;
-		}
-		vis[u] = 1;  //node u is visited
-		ans[--t] = u;
-		return true;
-	}
+    
+    bool Cycle(int node , vector<int> graph[] , vector<int> &vis , vector<int> &dfsVis){
+         vis[node] = 1 ;
+         dfsVis[node] = 1 ;
+        
+        for(auto &child : graph[node]){
+            if(!vis[child]){
+                if(Cycle(child,graph,vis,dfsVis)) return true ;
+            }else if(dfsVis[child] && vis[child]){
+                return true ;
+            }
+        }
+        
+        dfsVis[node] = 0 ;
+        return false ;
+    }
+    
+    
+    void dfs(int node , vector<bool> &vis , stack<int> &st , vector<int> graph[]){
+      
+      vis[node] = true ;
+      
+      for(auto &child : graph[node]){
+          if(!vis[child]){
+              dfs(child,vis,st,graph);
+          }
+      }
+      st.push(node);
+  }
     
     
     
-	vector<int> findOrder(int numCourses, vector<vector<int>> prerequisites) {
-		for (auto e : prerequisites)
-			adj[e[1]].push_back(e[0]); //u->v
-		ans = vector<int>(numCourses, 0);
-		t = numCourses;
-		vis = vector<int>(numCourses, false);
-		for (int u = 0; u < numCourses; u++)
-		{
-			if (vis[u] == 0)
-				if (dfs(u) == false) return{}; //has cycle
-		}
-		return ans;
-	}
+    
+    
 
+    
+    vector<int> findOrder(int n , vector<vector<int>>& nums) {
+            
+        vector<int> graph[n] ;
+        
+        for(auto &it : nums){
+            graph[it[1]].push_back(it[0]) ;
+        }
+        
+        
+        vector<int> vis(n,0);
+        vector<int> dfsVis(n,0);
+        
+        bool flag = 0 ;
+        
+        for(int i=0 ; i<n ; ++i){
+            if(!vis[i]){
+                if(Cycle(i,graph,vis,dfsVis)){
+                    flag  = true ;
+                    break ;
+                }
+            }
+        }
+        
+        if(flag) return {} ;
+        
+        vector<bool> vis2(n,0) ;
+        stack<int> st ;
+        
+        for(int i=0 ; i<n ; ++i){
+            if(!vis2[i]){
+                dfs(i,vis2,st,graph);
+            }
+        }
+        
+        vector<int> res ;
+        
+        while(!st.empty()){
+            int x = st.top() ;
+            res.push_back(x);
+            st.pop() ;
+        }
+        
+        return res ;
+    }
 };
