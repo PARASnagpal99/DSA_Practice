@@ -1,7 +1,7 @@
 class Solution {
 public:
     int mod = 1e9 + 7 ;
-    int dp[10005][7][7] ;
+    int dp[10005][7][7] = {} ;
     
     int func(int indx , int prev1 , int prev2 , int n){
         if(indx==n){
@@ -24,9 +24,28 @@ public:
        
     
     int distinctSequences(int n) {
-       memset(dp,-1,sizeof(dp));
-       int ans = func(0,0,0,n) ;
-       return ans ; 
+          
+        for(int prev1 = 0 ; prev1 <= 6 ; ++prev1){
+            for(int prev2 = 0 ; prev2 <= 6 ; ++prev2){
+                dp[n][prev1][prev2] = 1 ;
+            }
+        }
+        
+        for(int ind = n-1;ind >= 0;ind--){ 
+			for(int prev1 = 0;prev1 < 7;prev1++){
+				for(int prev2 = 0;prev2 < 7 ;prev2++){
+					int ans = 0;
+					for(int i = 1;i <= 6;i++)
+						if(prev1 != i && prev2 != i && (prev1 == 0 || __gcd(prev1,i) == 1))
+							ans = (ans + dp[ind+1][i][prev1])%mod;
+
+					dp[ind][prev1][prev2] = ans;
+				}
+			}
+		}
+		return dp[0][0][0];
+        
+        
         
         
         
