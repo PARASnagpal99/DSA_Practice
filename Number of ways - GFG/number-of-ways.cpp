@@ -23,9 +23,12 @@ public:
 
 
     long long int arrangeTiles(int N){
-        vector<long long>dp(N+1,-1);
-        long long ans = func(dp,N,N);
-        return ans ;
+        vector<long long>dp(N+1,1);
+      //  long long ans = func(dp,N,N);
+        for(int i=4 ; i<=N ; ++i){
+            dp[i] = dp[i-1] + dp[i-4] ;
+        }
+        return dp[N] ;
     }
 };
 
