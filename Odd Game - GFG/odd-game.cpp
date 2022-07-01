@@ -26,7 +26,10 @@ using namespace std;
 class Solution {
   public:
     long long oddGame(long long N) {
-              return pow(2,(int)log2(N)) ; 
+              while(N & (N-1)){
+                  N--;
+              }
+              return N ;
     }
 };
 
