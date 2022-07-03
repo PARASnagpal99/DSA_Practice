@@ -1,2 +1,2 @@
-# DSA_Practice 
-I will daily upload  solution to problems of leetcode , GFG , IB  .
+# DSA_Practice
+leetcode , GFG , IB  .
