@@ -90,11 +90,21 @@ public:
     int getCount(Node *root, int l, int h)
     {  
        int count = 0 ;
-       if(!root) return 0 ;
-       if(root->data <=h && root->data >=l) count++;
+       queue<Node*> q ;
+       q.push(root) ;
        
-       count += getCount(root->left,l,h);
-       count += getCount(root->right,l,h);
+       while(!q.empty()){
+           int sz = q.size() ;
+           for(int i=0 ; i<sz ; ++i){
+               Node *curr = q.front() ;
+               q.pop() ;
+               if(curr->data <=h && curr->data >=l) count++;
+               if(curr->left) q.push(curr->left) ;
+               if(curr->right)q.push(curr->right);
+           }
+       }
+       
+       return count ;
        
        return count ;
        
