@@ -6,18 +6,25 @@ public:
         if(n==0) return 0 ;
         if(n==1) return 1 ;
         
-        unordered_set<int> st ;
-        int ans = 0 ;
-        st.insert(nums[0]) ;
+        int ans = 1 ;
+        int count = 1 ;
         
-        for(int i=1 ; i<n ; ++i){
-            if(nums[i] != nums[i-1] && nums[i]!=nums[i-1] + 1){
-                st.clear() ;
+        for(int i=0 ; i<n-1 ; ++i){
+            if(nums[i+1]==nums[i]+1) count++;
+            else if(nums[i]==nums[i+1]) continue ;
+            else{
+                count = 1 ;
             }
-            st.insert(nums[i]) ;
-            int sz = st.size() ;
-            ans = max(sz,ans);
+            ans = max(ans,count);
         }
+        
+        return ans ;
+        
+        
+        
+        
+        
+        
         
         
         return ans ;
