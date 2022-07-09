@@ -24,31 +24,57 @@ public:
 //     }
     
     
+//         int n = nums.size() ;
+//         vector<int> dp(n,-1*1e9) ;        
+//         dp[0] = nums[0] ;
+//         multiset<int> st ;
+//         st.insert(dp[0]);
+        
+//         for(int i=1 ; i<n ; ++i){
+            
+//             if(i > k){
+//                  auto it = st.find(dp[i-k-1]) ;
+//                  if(it!=st.end()) st.erase(it) ;
+//             }
+//             auto it = st.end() ;
+//             it--;
+//             dp[i] = *it + nums[i] ;
+            
+//             st.insert(dp[i]) ;
+            
+//         }
+        
+//         return dp[n-1] ;
+           
+         
+    
     
     
     int maxResult(vector<int>& nums, int k) {
         int n = nums.size() ;
-        vector<int> dp(n,-1*1e9) ;
         
-        dp[0] = nums[0] ;
-        multiset<int> st ;
-        st.insert(dp[0]);
+        deque<pair<int,int>> dq ;
+        
+        dq.push_front({0,nums[0]}) ;
         
         for(int i=1 ; i<n ; ++i){
             
-            if(i > k){
-                 auto it = st.find(dp[i-k-1]) ;
-                 if(it!=st.end()) st.erase(it) ;
+            if(dq.front().first + k < i){
+                dq.pop_front() ;
             }
-            auto it = st.end() ;
-            it--;
-            dp[i] = *it + nums[i] ;
             
-            st.insert(dp[i]) ;
+            int curr = dq.front().second + nums[i] ; 
+            
+            while(!dq.empty() && dq.back().second < curr ){
+                   dq.pop_back() ;
+            }
+            
+            dq.push_back({i,curr});
             
         }
         
-        return dp[n-1] ;
+        
+        return dq.back().second ;
         
     }
 };
