@@ -11,10 +11,11 @@ using namespace std;
 class Solution
 {
 public:
-   void helper(int i , int j , int n , int m , vector<vector<int>> &grid , vector<int> res , vector<vector<int>> &ans){
+   void helper(int i , int j , int n , int m , vector<vector<int>> &grid , vector<int>& res , vector<vector<int>> &ans){
        if(i == n-1 && j == m-1){
            res.push_back(grid[i][j]) ;
            ans.push_back(res);
+           res.pop_back() ;
            return ;
        }
       
@@ -23,6 +24,7 @@ public:
        res.push_back(grid[i][j]) ;
        helper(i+1,j,n,m,grid,res,ans);
        helper(i,j+1,n,m,grid,res,ans);
+       res.pop_back() ;
    }
 
 
