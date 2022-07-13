@@ -11,30 +11,27 @@
  */
 class Solution {
 public:
+    int func(TreeNode *root) {
+      if (!root) return 0;
+      return max(func(root->left),func(root->right))+1;
+  }
+    
+    void bfs(vector<vector<int>> &ans, TreeNode *node, int level) {
+        if (!node) return;
+        ans[level].push_back(node->val);
+        bfs(ans,node->left,level-1);
+        bfs(ans,node->right,level-1);
+ }
+    
+    
     vector<vector<int>> levelOrderBottom(TreeNode* root) {
-            vector<vector<int>>res ;
-            if(root==NULL){
-                return res ;
-            }
-            queue<TreeNode*>q ;
-            q.push(root);
-            while(!q.empty()){
-                vector<int>temp ;
-                int sz = q.size() ;
-                for(int i=0 ; i<sz ; ++i){
-                    TreeNode* x = q.front() ;
-                    q.pop() ;
-                    temp.push_back(x->val);
-                    if(x->left!=NULL){
-                        q.push(x->left);
-                    }                   
-                    if(x->right!=NULL){
-                        q.push(x->right);
-                    }
-                }
-                res.push_back(temp);
-            }
-        reverse(res.begin(),res.end());
-        return res ;
+        int depth = func(root) ;
+        
+       vector<vector<int>> ans(depth,vector<int> {});
+        
+        bfs(ans,root,depth-1) ;
+        
+        return ans ;
+        
     }
 };
