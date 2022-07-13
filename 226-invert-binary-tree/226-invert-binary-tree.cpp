@@ -26,7 +26,9 @@ public:
             if(curr->left) q.push(curr->left) ;
             if(curr->right)q.push(curr->right) ;
             
-            swap(curr->left,curr->right) ;
+            TreeNode* temp = curr->left ;
+            curr->left = curr->right ;
+            curr->right = temp ;
             
         }
         
