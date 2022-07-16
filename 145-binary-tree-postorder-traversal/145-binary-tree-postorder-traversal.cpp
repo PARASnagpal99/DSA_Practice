@@ -16,7 +16,7 @@ public:
         vector<int> res ;
         if(!root) return res ;
         
-        stack<TreeNode*>stk1 , stk2 ;
+        stack<TreeNode*>stk1 ;
         
         stk1.push(root) ;
         
@@ -24,25 +24,26 @@ public:
             root = stk1.top() ;
             stk1.pop() ;
             
-            stk2.push(root) ;
+            res.push_back(root->val) ;
             
             if(root->left){
                 stk1.push(root->left) ;
             }
             
-            
-            if(root->right){
+             if(root->right){
                 stk1.push(root->right) ;
             }
+            
+            
         }
         
         
-        while(!stk2.empty()){
-             auto curr = stk2.top() ;
-             res.push_back(curr->val);
-             stk2.pop() ;
-        }
-        
+//         while(!stk2.empty()){
+//              auto curr = stk2.top() ;
+//              res.push_back(curr->val);
+//              stk2.pop() ;
+//         }
+        reverse(res.begin(),res.end());
         return res ;
         
     }
