@@ -10,19 +10,26 @@
  * };
  */
 class Solution {
-public:
-    void func(TreeNode* root , vector<int> &ans){
-        if(!root) return ;
-        ans.push_back(root->val);
-        func(root->left,ans);
-        func(root->right,ans);
-    }
-    
+public: 
     
     vector<int> preorderTraversal(TreeNode* root) {
         vector<int> ans ;
         if(!root) return ans ;
-        func(root,ans);
+        stack<TreeNode*> stk ;
+        stk.push(root) ;
+        
+        while(!stk.empty()){
+            auto curr = stk.top() ;
+            stk.pop() ;
+            
+            ans.push_back(curr->val) ;
+            
+            if(curr->right) stk.push(curr->right) ;
+            
+            if(curr->left) stk.push(curr->left) ;
+            
+        }
+        
         return ans ;
     }
 };
