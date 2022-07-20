@@ -1,47 +1,52 @@
 class Solution {
 public:
     int orangesRotting(vector<vector<int>>& grid) {
-        if(grid.empty()) return 0 ;
-        int m = grid.size() , n = grid[0].size() ;
-        int freshOranges = 0 ;
+        int n = grid.size() , m = grid[0].size() ; 
+        
+        int time = -1 ;
+        
+        int oranges = 0 ;
+        
         queue<pair<int,int>>q ;
         
-        for(int i=0 ; i<m ; ++i){
-            for(int j=0 ; j<n ; ++j){
+        for(int i=0 ; i<n ; ++i){
+            for(int j=0 ; j<m ; ++j){
+                if(grid[i][j] == 2){
+                    q.push({i,j});
+                } 
                 
-                if(grid[i][j]==1) freshOranges++;
+                if(grid[i][j] == 1) oranges++;
                 
-                if(grid[i][j]==2){
-                    q.push({i,j});  // multi source bfs  , push all the sources
-                }
             }
         }
         
         
-        int res = 0 ;
+        vector<pair<int,int>> dirs = {{1,0} , {-1,0} , {0,1} , {0,-1}} ;
+    
         
-        vector<pair<int,int>>directions = {{0,1} , {1,0} , {-1,0} , {0,-1} };
-        while(!q.empty() && freshOranges!=0){
-            int size = q.size() ;
-            for(int i=0 ; i<size ; ++i){
-                int x = q.front().first ;
-                int y = q.front().second ;
+        while(!q.empty()){
+            int sz = q.size() ;
+            time++;
+            for(int i=0 ; i<sz ; ++i){
+                auto [x,y] = q.front() ;
                 q.pop() ;
-                for(auto &it : directions){
-                    int newx = x + it.first ;
-                    int newy = y + it.second ;
-                    if(newx>=0 && newy>=0 && newx<m && newy<n && grid[newx][newy]==1){
-                        grid[newx][newy] = 2 ;
-                        freshOranges--;
-                        q.push({newx,newy});
+                for(auto &it : dirs){
+                    int nx = x + it.first ;
+                    int ny = y + it.second ; 
+                    if(nx >=0 && nx < n && ny >=0 && ny < m && grid[nx][ny] == 1){
+                        oranges--;
+                        grid[nx][ny] = 2 ;
+                        q.push({nx,ny});
                     }
                 }
             }
-            res++;
         }
-        if(freshOranges==0) return res ;
-        else return -1 ;
         
+        if(oranges > 0) return -1 ;
+        
+        if(time == -1) return 0 ;
+        
+        return time ;
         
     }
 };
