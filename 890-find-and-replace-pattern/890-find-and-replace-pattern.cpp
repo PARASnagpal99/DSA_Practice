@@ -1,19 +1,19 @@
 class Solution {
 public:
     string func(string &s){
-        map<char,char> mp ;
-        int indx = 97 ;
+        map<char,int> mp ;
+        int indx = 1 ;
         
         for(auto &it : s){
             if(mp.find(it) == mp.end()){
-                mp[it] = char(indx++);
+                mp[it] = indx ;
+                indx++;
             }
+            it = mp[it] ;
         }
         
-        for(int i=0 ; i<s.length() ; ++i){
-            s[i] = mp[s[i]];
-        }
         return s ;
+        
     }
     
     
